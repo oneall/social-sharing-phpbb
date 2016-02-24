@@ -1,0 +1,15 @@
+services:
+    oneall.socialsharing.listener:
+        class: oneall\socialsharing\event\listener
+        arguments:
+            - @config
+            - @config_text
+            - @controller.helper
+            - @request
+            - @template
+            - @user
+            - @dispatcher
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }

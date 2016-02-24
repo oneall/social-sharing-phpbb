@@ -1,0 +1,236 @@
+<!-- INCLUDE overall_header.html -->
+
+<script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/admin.js"></script>
+
+<!-- IF OA_SOCIAL_SHARING_LIBRARY_AVAILABLE -->
+	<script type="text/javascript">
+	    if (typeof oa === 'undefined') {
+		    var oass = document.createElement('script');
+		    oass.type = 'text/javascript'; 
+		    oass.async = true;
+		    oass.src = '//{OA_SOCIAL_SHARING_API_SUBDOMAIN}.api.oneall.com/socialize/library.js';
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(oass, s);
+	    }
+	</script>
+	<script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/icons_preview.js"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		init_preview (jQuery,
+				"{OA_SOCIAL_SHARING_SELECTED_BTNS}",
+				{OA_SOCIAL_SHARING_SELECTED_PROVIDERS},
+				{OA_SOCIAL_SHARING_PROVIDERS},
+				{OA_SOCIAL_SHARING_INSIGHT_DISABLE});
+	</script>
+<!-- ENDIF -->
+
+<link rel="stylesheet" type="text/css" href="../ext/oneall/socialsharing/adm/style/css/admin.css" />
+
+<div id="oneall_socialsharing">
+
+	<!-- IF OA_SOCIAL_SHARING_SETTINGS_SAVED -->
+		<div class="successbox">
+			<h3>Information</h3>
+			<p>{L_OA_SOCIAL_SHARING_SETTINGS_UPDATED}</p>
+		</div>
+	<!-- ENDIF -->
+	
+	<!-- IF S_WARNING -->
+		<div class="errorbox">
+	   	<h3>{L_WARNING}</h3>
+	   	<p>{WARNING_MSG}</p>
+		</div>
+	<!-- ENDIF -->
+
+	<h1>{L_OA_SOCIAL_SHARING_TITLE}</h1>
+	<div class="section">
+		<p>
+			{L_OA_SOCIAL_SHARING_INTRO}
+		</p>
+	</div>					
+	<div class="section welcome">
+		<h3>{L_OA_SOCIAL_SHARING_TITLE_HELP}</h3>
+		<ul>
+			<li>{L_OA_SOCIAL_SHARING_FOLLOW_US_TWITTER}</li>
+			<li>{L_OA_SOCIAL_SHARING_READ_DOCS}</li>
+			<li>{L_OA_SOCIAL_SHARING_DISCOVER_PLUGINS}</li>
+			<li>{L_OA_SOCIAL_SHARING_GET_HELP}</li>			
+		</ul>
+	</div>
+	<div class="section get_started">
+		<h4>{L_OA_SOCIAL_SHARING_CREATE_ACCOUNT_FIRST}</h4>
+		<p>
+			{L_OA_SOCIAL_SHARING_SETUP_FREE_ACCOUNT} | {L_OA_SOCIAL_SHARING_VIEW_CREDENTIALS}
+		</p>
+	</div>
+		
+	<form id="oneall_social_sharing_form" method="post" action="{U_ACTION}">
+	
+		<fieldset>
+			<legend>{L_OA_SOCIAL_SHARING_DO_ENABLE}</legend>			
+			<dl>
+				<dt>
+					<label for="oa_social_sharing_disable_0">{L_OA_SOCIAL_SHARING_DO_ENABLE}</label>
+					<br /><span>{L_OA_SOCIAL_SHARING_DO_ENABLE_DESC}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" id="oa_social_sharing_disable_0" name="oa_social_sharing_disable" value="0"<!-- IF not OA_SOCIAL_SHARING_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_DO_ENABLE_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label><br />
+					<label><input type="radio" class="radio" id="oa_social_sharing_disable_1" name="oa_social_sharing_disable" value="1"<!-- IF OA_SOCIAL_SHARING_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_DO_ENABLE_NO}</label>
+				</dd>
+			</dl>
+		</fieldset>
+		
+		<fieldset>
+			<legend>{L_OA_SOCIAL_SHARING_API_CREDENTIALS_TITLE}</legend>		
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_api_subdomain">{L_OA_SOCIAL_SHARING_API_SUBDOMAIN}{L_COLON}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_API_SUBDOMAIN_DESC}</span>
+					</dt>
+					<dd>
+						<input type="text" id="oa_social_sharing_api_subdomain" name="oa_social_sharing_api_subdomain" value="{OA_SOCIAL_SHARING_API_SUBDOMAIN}"  size="60" />
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<span id="oa_social_sharing_api_test_result" class="{OA_SOCIAL_SHARING_API_ERROR_CLASS}">{WARNING_MSG}</span>
+					</dt>
+					<dd> 			
+						<input class="button2" type="button" id="oa_social_sharing_test_api_settings" value="{L_OA_SOCIAL_SHARING_API_VERIFY}" />               
+					</dd>
+				</dl>
+		</fieldset>		
+		
+		<!-- IF OA_SOCIAL_SHARING_LIBRARY_AVAILABLE -->
+		
+			<fieldset>
+				<legend>{L_OA_SOCIAL_SHARING_DISPLAY_LOC}</legend>
+				<dl class="dot">
+					<dt>
+						<label for="oa_social_sharing_caption">{L_OA_SOCIAL_SHARING_CAPTION}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_CAPTION_DESC}</span>
+					</dt>
+					<dd>
+						<input type="text" id="oa_social_sharing_caption" name="oa_social_sharing_caption" value="{OA_SOCIAL_SHARING_CAPTION}" size="60" />
+					</dd>
+				</dl>							
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_viewtopicbodycontactfields_disable_0">{L_OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicbodycontactfields_disable_1" 
+							name="oa_social_sharing_viewtopicbodycontactfields_disable" value="1"
+							<!-- IF OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS_DISABLE --> checked="checked"<!-- ENDIF --> />
+							 {L_OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS_NO}</label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicbodycontactfields_disable_0" 
+							name="oa_social_sharing_viewtopicbodycontactfields_disable" value="0"
+							<!-- IF not OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS_DISABLE --> checked="checked"<!-- ENDIF --> />
+							 {L_OA_SOCIAL_SHARING_VIEWTOPICBODYCONTACTFIELDS_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>					
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_viewtopicpaginationtopafter_disable_0">{L_OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicpaginationtopafter_disable_1" name="oa_social_sharing_viewtopicpaginationtopafter_disable" value="1"<!-- IF OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER_NO}</label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicpaginationtopafter_disable_0" name="oa_social_sharing_viewtopicpaginationtopafter_disable" value="0"<!-- IF not OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_VIEWTOPICPAGINATIONAFTER_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>					
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_viewtopicdropdownbottomcustom_disable_0">{L_OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicdropdownbottomcustom_disable_1" name="oa_social_sharing_viewtopicdropdownbottomcustom_disable" value="1"<!-- IF OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM_NO}</label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_viewtopicdropdownbottomcustom_disable_0" name="oa_social_sharing_viewtopicdropdownbottomcustom_disable" value="0"<!-- IF not OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_VIEWTOPICDROPDOWNBOTTOMCUSTOM_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>					
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_headercontentbefore_disable_0">{L_OA_SOCIAL_SHARING_HEADERCONTENTBEFORE}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_HEADERCONTENTBEFORE_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_headercontentbefore_disable_1" name="oa_social_sharing_headercontentbefore_disable" value="1"<!-- IF OA_SOCIAL_SHARING_HEADERCONTENTBEFORE_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_HEADERCONTENTBEFORE_NO}</label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_headercontentbefore_disable_0" name="oa_social_sharing_headercontentbefore_disable" value="0"<!-- IF not OA_SOCIAL_SHARING_HEADERCONTENTBEFORE_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_HEADERCONTENTBEFORE_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_pagebodyafter_disable_0">{L_OA_SOCIAL_SHARING_PAGEBODYAFTER}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_PAGEBODYAFTER_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_pagebodyafter_disable_1" name="oa_social_sharing_pagebodyafter_disable" value="1"<!-- IF OA_SOCIAL_SHARING_PAGEBODYAFTER_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_PAGEBODYAFTER_NO}</label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_pagebodyafter_disable_0" name="oa_social_sharing_pagebodyafter_disable" value="0"<!-- IF not OA_SOCIAL_SHARING_PAGEBODYAFTER_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_PAGEBODYAFTER_YES} <strong>({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>
+					</dd>
+				</dl>
+			</fieldset>		
+			
+			<fieldset>
+				<legend>{L_OA_SOCIAL_SHARING_PREVIEW}</legend>
+				<dl>
+					<dt id="oa_social_sharing_preview"></dt>
+				</dl>
+			</fieldset>
+			
+			<fieldset>
+				<legend>{L_OA_SOCIAL_SHARING_DISPLAY_PARAMS}</legend>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_btns_0">{L_OA_SOCIAL_SHARING_BUTTONS}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_BUTTONS_DESC}</span>
+					</dt>
+					<dd>
+					<!-- BEGIN button -->
+						<label>
+							<input type="radio" class="radio" id="oa_social_sharing_btns_{button.KEY}" name="oa_social_sharing_btns" value="{button.VAL}"
+							<!-- IF button.SELECTED --> checked="checked"<!-- ENDIF --> /> {button.LBL}
+						</label>
+					<!-- END button -->
+					</dd>					
+				</dl>
+				<dl>
+					<dt>
+						<label for="oa_social_sharing_insight_0">{L_OA_SOCIAL_SHARING_INSIGHT}</label>
+						<br /><span>{L_OA_SOCIAL_SHARING_INSIGHT_DESC}</span>
+					</dt>
+					<dd>
+						<label><input type="radio" class="radio" id="oa_social_sharing_insight_disable_1" name="oa_social_sharing_insight_disable" value="1"
+							<!-- IF OA_SOCIAL_SHARING_INSIGHT_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_INSIGHT_NO}<strong> ({L_OA_SOCIAL_SHARING_DEFAULT})</strong></label>
+						<label><input type="radio" class="radio" id="oa_social_sharing_insight_disable_0" name="oa_social_sharing_insight_disable" value="0"
+							<!-- IF not OA_SOCIAL_SHARING_INSIGHT_DISABLE --> checked="checked"<!-- ENDIF --> /> {L_OA_SOCIAL_SHARING_INSIGHT_YES}</label>
+					</dd>
+				</dl>
+			</fieldset>			
+
+			<fieldset>
+				<legend>{L_OA_SOCIAL_SHARING_ENABLE_NETWORKS}</legend>						
+				<!-- BEGIN provider -->
+					<dl>	
+						<dt class="provider_box">							
+								<input style="cursor:pointer" type="checkbox" id="oa_social_sharing_provider_{provider.KEY}" 
+									name="oa_social_sharing_provider_{provider.VAL}" 
+									value="1" <!-- IF provider.ENABLE --> checked="checked"<!-- ENDIF -->  />
+								<label for="oa_social_sharing_provider_{provider.KEY}"> {provider.LBL}</label>
+						</dt>
+					</dl>
+				<!-- END provider -->			
+			</fieldset>
+		
+		<!-- ENDIF -->
+		
+		<fieldset class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />
+			{S_FORM_TOKEN}
+		</fieldset>
+	</form>
+	<div id="sid" style="display: none;">{CURRENT_SID}</div>
+</div>
+<!-- INCLUDE overall_footer.html -->

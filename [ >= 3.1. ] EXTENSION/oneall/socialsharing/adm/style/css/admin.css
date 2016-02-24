@@ -1,0 +1,91 @@
+#oneall_socialsharing  a,
+#oneall_socialsharing  a.button1:hover {
+	color: #BC2A4D;
+	text-decoration: underline;
+}
+
+#oneall_socialsharing  a:hover,
+#oneall_socialsharing  a.button1 {
+	color: #105289;
+	text-decoration: none;
+}
+
+#oneall_socialsharing .section {
+	margin: 5px 0 20px 0;
+}
+
+#oneall_socialsharing .section.welcome {
+	border: 1px solid #ccc;
+	padding: 20px;
+	background-color: #FFFFE0
+}
+
+#oneall_socialsharing .section.get_started {
+	background-color: #DDDDDD;
+	border: 1px dashed #AAAAAA;
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+#oneall_socialsharing .section.get_started h4 {
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+#oneall_socialsharing .section.welcome h3 {
+	margin: 5px 0 10px;
+}
+
+#oneall_socialsharing .working_message {
+	color: blue;
+	background: url("../img/status_loading.gif") no-repeat scroll 0 50% transparent;
+	padding-left: 25px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+#oneall_socialsharing .error_message {
+	color: red;
+	background: url("../img/status_error.png") no-repeat scroll 0 50% transparent;
+	padding-left: 25px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+#oneall_socialsharing .error_message a {
+	color: red;
+	font-weight: bold;
+}
+
+#oneall_socialsharing .error_message a:hover {
+	color: #C70000;
+}
+
+#oneall_socialsharing .success_message {
+	color: green;
+	background: url("../img/status_ok.png") no-repeat scroll 0 50% transparent;
+	padding-left: 25px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+#oneall_socialsharing fieldset dl.dot {
+	border-bottom: 2px dotted #ccc !important;
+	padding: 5px 0 15px;
+}
+
+#oneall_socialsharing fieldset dl:last-child {
+	border: 0 none;
+	margin-bottom: 0;
+	padding-bottom: 5px;
+}
+
+#oneall_socialsharing fieldset dl dt,
+#oneall_socialsharing fieldset dl dd {
+	border: 0 none;
+}
+
+#oneall_socialsharing .provider_box {
+	border: 0 none;
+}
