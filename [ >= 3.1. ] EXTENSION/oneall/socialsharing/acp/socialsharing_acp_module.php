@@ -67,8 +67,20 @@ class socialsharing_acp_module
 		// Enable Social Sharing?
 		$oass_disable = (empty ($config ['oa_social_sharing_disable']) ? 0 : 1);
 
-		$oass_api_subdomain = (isset ($config ['oa_social_sharing_api_subdomain']) ?
-				$config ['oa_social_sharing_api_subdomain'] : '');
+		// Pre-populate the subdomain from Social Login, if present and enabled:
+		if (empty ($config ['oa_social_login_disable']) && 
+			!empty ($config ['oa_social_login_api_subdomain']))
+		{
+			$oass_api_subdomain = trim ($config ['oa_social_login_api_subdomain']);
+		}
+		else if (isset ($config ['oa_social_sharing_api_subdomain']))
+		{
+			$oass_api_subdomain = $config ['oa_social_sharing_api_subdomain'];
+		}
+		else 
+		{
+			$oass_api_subdomain = '';
+		}
 		
 		$oass_library_available = !empty ($oass_api_subdomain); 
 
@@ -82,25 +94,33 @@ class socialsharing_acp_module
 				$config ['oa_social_sharing_caption'] : $user->lang ['OA_SOCIAL_SHARING_CAPTION_DEFAULT']);
 
 		// page_body_after
-		$oass_pagebodyafter_disable = (empty ($config ['oa_social_sharing_pagebodyafter_disable']) ?
+		$oass_pagebodyafter_disable = (
+				empty ($config ['oa_social_sharing_pagebodyafter_disable']) ?
 				0 : 1);
 		// header_content_before
-		$oass_headercontentbefore_disable = (empty ($config ['oa_social_sharing_headercontentbefore_disable']) ?
+		$oass_headercontentbefore_disable = (
+				empty ($config ['oa_social_sharing_headercontentbefore_disable']) ?
 				0 : 1);
 		// viewtopic_body_contact_fields
-		$oass_viewtopicbodycontactfields_disable = (empty ($config ['oa_social_sharing_viewtopicbodycontactfields_disable']) ?
+		$oass_viewtopicbodycontactfields_disable = (
+				empty ($config ['oa_social_sharing_viewtopicbodycontactfields_disable']) ?
 				0 : 1);
 		// viewtopic_pagination_top_after
-		$oass_viewtopicpaginationtopafter_disable = (empty ($config ['oa_social_sharing_viewtopicpaginationtopafter_disable']) ?
+		$oass_viewtopicpaginationtopafter_disable = (
+				empty ($config ['oa_social_sharing_viewtopicpaginationtopafter_disable']) ?
 				0 : 1);
 		// viewtopic_dropdown_bottom_custom
-		$oass_viewtopicdropdownbottomcustom_disable = (empty ($config ['oa_social_sharing_viewtopicdropdownbottomcustom_disable']) ?
+		$oass_viewtopicdropdownbottomcustom_disable = (
+				empty ($config ['oa_social_sharing_viewtopicdropdownbottomcustom_disable']) ?
 				0 : 1);
 		// style of buttons
 		$default_btns = 'btns_s';
-		$oass_btns = (empty ($config ['oa_social_sharing_btns']) ? $default_btns : $config ['oa_social_sharing_btns']);
+		$oass_btns = (
+				empty ($config ['oa_social_sharing_btns']) ? 
+				$default_btns : $config ['oa_social_sharing_btns']);
 		// social insight
-		$oass_insight_disable = (isset ($config ['oa_social_sharing_insight_disable']) && $config ['oa_social_sharing_insight_disable'] == 0) ?
+		$oass_insight_disable = (
+				isset ($config ['oa_social_sharing_insight_disable']) && $config ['oa_social_sharing_insight_disable'] == 0) ?
 				0 : 1;
 
 		// Triggers a form message.
@@ -118,12 +138,16 @@ class socialsharing_acp_module
 				trigger_error ($user->lang ['FORM_INVALID'] . adm_back_link ($this->u_action), E_USER_WARNING);
 			}
 
+			$oass_disable = $request->variable ('oa_social_sharing_disable', $oass_disable);
+			$oass_library_available = true;
+			
 			// Verify the API subdomain.
 			$warning_msg = '';
 			$oass_api_subdomain = trim (strtolower ($request->variable ('oa_social_sharing_api_subdomain', '', true)));
 			if (empty ($oass_api_subdomain))
 			{
 				$warning_msg = $user->lang ['OA_SOCIAL_SHARING_API_CREDENTIALS_FILL_OUT'];
+				$oass_library_available = false;
 			}
 			// Check for full subdomain.
 			if (empty ($warning_msg) && preg_match ("/([a-z0-9\-]+)\.api\.oneall\.com/i", $oass_api_subdomain, $matches))
@@ -135,8 +159,10 @@ class socialsharing_acp_module
 			if (empty ($warning_msg) && !self::is_library_url_valid ($library_url))
 			{
 				$warning_msg = $user->lang ['OA_SOCIAL_SHARING_API_CREDENTIALS_SUBDOMAIN_WRONG'];
+				$oass_library_available = false;
 			}
-			if (!empty ($warning_msg))
+			// Only report problems if the extension is enabled:
+			if (!$oass_disable && !empty ($warning_msg))
 			{
 				$template->assign_vars (array (
 					'U_ACTION' => $this->u_action,
@@ -144,14 +170,13 @@ class socialsharing_acp_module
 					'S_WARNING' => true,
 					'WARNING_MSG' => $warning_msg,
 					'OA_SOCIAL_SHARING_API_ERROR_CLASS' => 'error_message',
-					'OA_SOCIAL_SHARING_LIBRARY_AVAILABLE' => false,
+					'OA_SOCIAL_SHARING_LIBRARY_AVAILABLE' => $oass_library_available,
 					'OA_SOCIAL_SHARING_SETTINGS_SAVED' => false,
 					'OA_SOCIAL_SHARING_DISABLE' => $oass_disable,
 					'OA_SOCIAL_SHARING_API_SUBDOMAIN' => $oass_api_subdomain,
 				));
 				return false;
 			}
-			$oass_library_available = true;
 
 			// Social Networks.
 			$req_providers = array();
@@ -164,7 +189,6 @@ class socialsharing_acp_module
 			}
 			$oass_providers = empty ($req_providers) ? $oass_providers : $req_providers;
 			
-			$oass_disable = $request->variable ('oa_social_sharing_disable', $oass_disable);
 			$oass_caption = ($request->variable ('oa_social_sharing_caption', '_NOT_REQ_', true) == '_NOT_REQ_') ? 
 					$oass_caption : $request->variable ('oa_social_sharing_caption', '', true);
 			$oass_pagebodyafter_disable = $request->variable ('oa_social_sharing_pagebodyafter_disable', 

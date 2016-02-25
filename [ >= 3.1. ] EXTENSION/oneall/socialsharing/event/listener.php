@@ -111,8 +111,16 @@ class listener implements EventSubscriberInterface
 		}
 		// We're displaying the icons.
 		$this->template->assign_var ('OA_SOCIAL_SHARING_EMBED_ICONS', 1);
-		// TODO add logic to work with social login (same subdomain).
-		$this->template->assign_var ('OA_SOCIAL_SHARING_EMBED_LIBRARY', 1);
+		// Do not load the library if Social Login loaded it:
+		if (empty ($this->config ['oa_social_login_disable']) && 
+			!empty ($this->config ['oa_social_login_api_subdomain']))
+		{
+			$this->template->assign_var ('OA_SOCIAL_SHARING_EMBED_LIBRARY', 0);
+		}
+		else 
+		{
+			$this->template->assign_var ('OA_SOCIAL_SHARING_EMBED_LIBRARY', 1);	
+		}
 		$this->template->assign_var ('OA_SOCIAL_SHARING_SUBDOMAIN', $this->config ['oa_social_sharing_api_subdomain']);
 
 		$all_providers = \oneall\socialsharing\acp\socialsharing_acp_module::get_providers ();
@@ -144,8 +152,6 @@ class listener implements EventSubscriberInterface
 				empty ($this->config ['oa_social_sharing_btns']) ? 'btn_s' : $this->config ['oa_social_sharing_btns']);
 		$this->template->assign_var ('OA_SOCIAL_SHARING_OPT',
 				empty ($this->config ['oa_social_sharing_insight_disable']) ? 1 : 0);
-		//$this->template->assign_var ('OA_SOCIAL_SHARING_URL', generate_board_url (true) . '/' . $this->user->page['page']);
-
 	}
 	
 	/**
