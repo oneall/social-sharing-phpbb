@@ -48,7 +48,7 @@ function init_preview($, layout_p, selection_p, services_p, insight_disable_p) {
 						};
 
 						/* Button style */
-						$("input[name='oa_social_sharing_btns'][type='radio']")
+						$('select#oa_social_sharing_btns')
 								.change("layout", function(ev) {
 									share_preview.layout = $(this).val();
 									share_preview.trigger_refresh();

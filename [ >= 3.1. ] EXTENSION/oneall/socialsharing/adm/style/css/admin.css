@@ -89,3 +89,7 @@
 #oneall_socialsharing .provider_box {
 	border: 0 none;
 }
+
+#oneall_socialsharing #oa_social_sharing_preview {
+	width: 100%;
+}

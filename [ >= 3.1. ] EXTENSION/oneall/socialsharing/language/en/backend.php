@@ -34,7 +34,7 @@ if (empty ($lang) || ! is_array ($lang))
 
 // Social Sharing Backend.
 $lang = array_merge ($lang, array (
-	'OA_SOCIAL_SHARING_ACP' => 'OneAll Social Sharing Settings',
+	'OA_SOCIAL_SHARING_ACP' => 'OneAll Social Sharing',
 	'OA_SOCIAL_SHARING_ACP_SETTINGS' => 'Settings',
 	'OA_SOCIAL_SHARING_API_CHANGE_SUBDOMAIN' => ' (not found!)',
 	'OA_SOCIAL_SHARING_API_CONNECTION' => 'API Connection',

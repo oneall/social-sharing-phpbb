@@ -221,14 +221,19 @@ class socialsharing_acp_module
 		} /* end submit */
 
 		// Setup Style of buttons
-		foreach (self::get_buttons () as $key => $btn)
+		foreach (self::get_icons () as $grp => $icn)
 		{
-			$template->assign_block_vars ('button', array(
-					'KEY' => $key,
-					'LBL' => $btn['lbl'],
-					'VAL' => $btn['val'],
-					'SELECTED' => $btn['val'] === $oass_btns,
+			$template->assign_block_vars ('icongroup', array(
+				'LBL' => $grp,
 			));
+			foreach ($icn as $val => $lbl) 
+			{
+				$template->assign_block_vars('icongroup.icons', array(
+					'VAL' => $val,
+					'LBL' => $lbl,
+					'SELECTED' => $val === $oass_btns,
+				));
+			}
 		}
 
 		// Setup Social Network vars
@@ -270,18 +275,68 @@ class socialsharing_acp_module
 	/**
 	 * Returns the list of available button styles.
 	 */
-	public static function get_buttons ()
+	private static function get_icons ()
 	{
 		return array (
-				array('val' => 'btns_s',  'lbl' => 'Small Buttons'),
-				array('val' => 'btns_m',  'lbl' => 'Medium Buttons'),
-				array('val' => 'btns_l',  'lbl' => 'Large Buttons'),
-				array('val' => 'btns_l',  'lbl' => 'Large Buttons'),
-				array('val' => 'count_h', 'lbl' => 'Horizontal Counters'),
-				array('val' => 'count_v', 'lbl' => 'Vertical Counters'),
+			'Beveled Squares' => array( 
+				'btns_s' => 'Beveled Squares (Small, Colored)',
+				'btns_m' => 'Beveled Squares (Medium, Colored)',
+				'btns_l' => 'Beveled Squares (Large, Colored)',
+				'count_h' => 'Beveled Squares (Small, Colored, Horizontal Counters)',
+				'count_v' => 'Beveled Squares (Small, Colored, Vertical Counters)',
+			),
+			'Flat Rectangles' => array(
+				'btns_hf' => 'Flat Rectangles (Colored)',
+				'btns_hf_b' => 'Flat Rectangles (Black)',
+				'btns_hf_g' => 'Flat Rectangles (Grey)',
+			),
+			'Flat Rectangles With Counters' => array(
+				'btns_hf_count' => 'Flat Rectangles (Colored, Counters)',
+				'btns_hf_b_count' => 'Flat Rectangles (Black, Counters)',
+				'btns_hf_g_count' => 'Flat Rectangles (Grey, Counters)',
+			),
+			'Flat Rounded Rectangles' => array(
+				'btns_hfrr' => 'Flat Rectangles (Colored, Rounded)',
+				'btns_hfrr_b' => 'Flat Rectangles (Black, Rounded)',
+				'btns_hfrr_g' => 'Flat Rectangles (Grey, Rounded)',
+			),
+			'Flat Rounded Rectangles With Counters' => array( 
+				'btns_hfrr_count' => 'Flat Rectangles (Colored, Rounded, Counters)',
+				'btns_hfrr_b_count' => 'Flat Rectangles (Black, Rounded, Counters)',
+				'btns_hfrr_g_count' => 'Flat Rectangles (Grey, Counters, Counters)',
+			),
+			'Flat Blocks Without Margin' => array(
+				'btns_lfnm' => 'Flat Blocks (Colored, No Margin)',
+				'btns_lfnm_b' => 'Flat Blocks (Black, No Margin)',
+				'btns_lfnm_g' => 'Flat Blocks (Grey, No Margin)',
+			),
+			'Flat Circles' => array(
+				'btns_lfr' => 'Flat Circles (Colored)',
+				'btns_lfr_b' => 'Flat Circles (Black)',
+				'btns_lfr_g' => 'Flat Circles (Grey)',
+			),
+			'Flat Squares' => array(
+				'btns_lf' => 'Flat Squares (Colored)',
+				'btns_lf_b' => 'Flat Squares (Black)',
+					'btns_lf_g' => 'Flat Squares (Grey)',
+			),
+			'Flat Squares With Counters' => array(
+				'btns_lf_count' => 'Flat Squares (Colored, Counters)',
+				'btns_lf_b_count' => 'Flat Squares (Black, Counters)',
+				'btns_lf_g_count' => 'Flat Squares (Grey, Counters)',
+			),
+			'Flat Rounded Squares' => array(
+				'btns_lfrr' => 'Flat Squares (Colored, Rounded)',
+				'btns_lfrr_b' => 'Flat Squares (Black, Rounded)',
+				'btns_lfrr_g' => 'Flat Squares (Grey, Rounded)',
+			),
+			'Flat Rounded Squares With Counters' => array(
+				'btns_lfrr_count' => 'Flat Squares (Colored, Rounded, Counters)',
+				'btns_lfrr_b_count' => 'Flat Squares (Black, Rounded, Counters)',
+				'btns_lfrr_g_count' => 'Flat Squares (Grey, Rounded, Counters)',
+			),
 		);
 	}
-
 
 	public static function flatten_providers ()
 	{

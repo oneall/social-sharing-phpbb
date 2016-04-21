@@ -184,16 +184,23 @@
 				<legend>{L_OA_SOCIAL_SHARING_DISPLAY_PARAMS}</legend>
 				<dl>
 					<dt>
-						<label for="oa_social_sharing_btns_0">{L_OA_SOCIAL_SHARING_BUTTONS}</label>
+						<label for="oa_social_sharing_btns">{L_OA_SOCIAL_SHARING_BUTTONS}</label>
 						<br /><span>{L_OA_SOCIAL_SHARING_BUTTONS_DESC}</span>
 					</dt>
 					<dd>
-					<!-- BEGIN button -->
-						<label>
-							<input type="radio" class="radio" id="oa_social_sharing_btns_{button.KEY}" name="oa_social_sharing_btns" value="{button.VAL}"
-							<!-- IF button.SELECTED --> checked="checked"<!-- ENDIF --> /> {button.LBL}
-						</label>
-					<!-- END button -->
+						<select id="oa_social_sharing_btns" name="oa_social_sharing_btns">
+							<!-- BEGIN icongroup -->
+							<optgroup label="{icongroup.LBL}">
+								<!-- BEGIN icons -->
+									<option id="oa_social_sharing_btns_{icongroup.icons.VAL}" 
+										value="{icongroup.icons.VAL}" 
+										<!-- IF icongroup.icons.SELECTED --> selected="selected" <!-- ENDIF -->>
+										{icongroup.icons.LBL}
+									</option>
+								<!-- END icons -->
+							</optgroup>
+							<!-- END icongroup -->
+						</select>
 					</dd>					
 				</dl>
 				<dl>
