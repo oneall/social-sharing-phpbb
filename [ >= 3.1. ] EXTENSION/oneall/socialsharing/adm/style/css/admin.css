@@ -93,3 +93,7 @@
 #oneall_socialsharing #oa_social_sharing_preview {
 	width: 100%;
 }
+
+#oneall_socialsharing #oa_social_sharing_preview span {
+	padding: 0;
+}
