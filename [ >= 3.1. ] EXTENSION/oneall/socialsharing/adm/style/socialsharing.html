@@ -1,6 +1,7 @@
 <!-- INCLUDE overall_header.html -->
 
 <script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../ext/oneall/socialsharing/adm/style/js/admin.js"></script>
 
 <!-- IF OA_SOCIAL_SHARING_LIBRARY_AVAILABLE -->
@@ -20,7 +21,7 @@
 		init_preview (jQuery,
 				"{OA_SOCIAL_SHARING_SELECTED_BTNS}",
 				{OA_SOCIAL_SHARING_SELECTED_PROVIDERS},
-				{OA_SOCIAL_SHARING_PROVIDERS},
+				{OA_SOCIAL_SHARING_PROVIDERS_DEFAULT},
 				{OA_SOCIAL_SHARING_INSIGHT_DISABLE});
 	</script>
 <!-- ENDIF -->
@@ -183,9 +184,9 @@
 			
 			<fieldset>
 				<legend>{L_OA_SOCIAL_SHARING_PREVIEW}</legend>
-				<dl>
-					<dt id="oa_social_sharing_preview"></dt>
-				</dl>
+				<div>
+					<div id="preview_container"></div>
+				</div>
 			</fieldset>
 			
 			<fieldset>
@@ -225,10 +226,10 @@
 				</dl>
 			</fieldset>			
 
-			<fieldset>
+			<fieldset id="sortable">
 				<legend>{L_OA_SOCIAL_SHARING_ENABLE_NETWORKS}</legend>						
 				<!-- BEGIN provider -->
-					<dl>	
+					<dl class="sortable_provider_box">	
 						<dt class="provider_box">							
 								<input style="cursor:pointer" type="checkbox" id="oa_social_sharing_provider_{provider.KEY}" 
 									name="oa_social_sharing_provider_{provider.VAL}" 

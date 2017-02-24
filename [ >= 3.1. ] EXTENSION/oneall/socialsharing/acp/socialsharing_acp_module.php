@@ -132,6 +132,7 @@ class socialsharing_acp_module
 		// Form submitted.
 		if (!empty ($request->variable ('submit', '', true)))
 		{
+
 			// Security Check
 			if (!check_form_key ('oa_social_sharing'))
 			{
@@ -178,13 +179,21 @@ class socialsharing_acp_module
 				return false;
 			}
 
+			//get providers order
+			$providers_order = array();
+			foreach ($request->variable_names() as $variable_name) {
+				if (strpos($variable_name, 'oa_social_sharing_provider_') !== false ){
+					$providers_order[] = str_replace('oa_social_sharing_provider_', '', $variable_name);
+				}
+			}
+
 			// Social Networks.
 			$req_providers = array();
-			foreach (self::get_providers () as $key => $provider)
+			foreach ($providers_order as $provider_name)
 			{
-				if ($request->variable ('oa_social_sharing_provider_' . $provider['val'], 0) == 1)
+				if ($request->variable ('oa_social_sharing_provider_' . $provider_name, 0) == 1)
 				{
-					$req_providers[] = $provider['val'];
+					$req_providers[] = $provider_name;
 				}
 			}
 			$oass_providers = empty ($req_providers) ? $oass_providers : $req_providers;
@@ -236,8 +245,10 @@ class socialsharing_acp_module
 			}
 		}
 
+		
 		// Setup Social Network vars
-		foreach (self::get_providers () as $key => $prov)
+		$all_providers = self::ordered_providers ($oass_providers);
+		foreach ($all_providers as $key => $prov)
 		{
 			$template->assign_block_vars ('provider', array (
 					'KEY' => $key,
@@ -265,6 +276,7 @@ class socialsharing_acp_module
 				'OA_SOCIAL_SHARING_SELECTED_BTNS' => $oass_btns,
 				'OA_SOCIAL_SHARING_SELECTED_PROVIDERS' => json_encode ($oass_providers),
 				'OA_SOCIAL_SHARING_PROVIDERS' => json_encode (self::flatten_providers ()),
+				'OA_SOCIAL_SHARING_PROVIDERS_DEFAULT' => json_encode (self::get_providers ()),
 			));
 		
 		// Done
@@ -340,12 +352,46 @@ class socialsharing_acp_module
 
 	public static function flatten_providers ()
 	{
+		global $config;
+
+		//get ordered providers
+		$default_providers = array ('facebook');
+		$oass_providers = (empty ($config ['oa_social_sharing_providers']) ? $default_providers : explode (",", $config ['oa_social_sharing_providers']));
+		$all_providers = self::ordered_providers ($oass_providers);
+
 		$flat = array ();
-		foreach (self::get_providers () as $prov)
+		foreach ($all_providers as $prov)
 		{
 			$flat[$prov['val']] = $prov['lbl'];
 		}
 		return $flat;
+	}
+
+	public static function ordered_providers ($oass_providers)
+	{
+		$ordered = array ();
+
+		$all_providers = self::get_providers ();
+
+		// Setup Selected Social Network vars
+		foreach ($oass_providers as $prov)
+		{
+			$prov_info = self::get_providers ()[$prov];
+			$ordered [$prov] = array(
+				'val' => $prov_info['val'],
+				'lbl' => $prov_info['lbl']
+			);
+			unset($all_providers[$prov]);
+		}
+		// Setup Social Network vars
+		foreach ($all_providers as $key => $prov)
+		{
+			$ordered [$key] = array(
+				'val' => $prov['val'],
+				'lbl' => $prov['lbl']
+			);
+		}
+		return $ordered;
 	}
 	
 	/**
@@ -354,24 +400,25 @@ class socialsharing_acp_module
 	public static function get_providers ()
 	{
 		return array (
-			array ('val' => 'facebook',            'lbl' => 'Facebook'),
-			array ('val' => 'twitter',             'lbl' => 'Twitter'),
-			array ('val' => 'linkedin',            'lbl' => 'LinkedIn'),
-			array ('val' => 'google_bookmarks',    'lbl' => 'Google Bookmarks'),
-			array ('val' => 'google_plus',         'lbl' => 'Google Plus'),
-			array ('val' => 'google_plus_one_but', 'lbl' => 'Google +1 Button'),
-			array ('val' => 'delicious',           'lbl' => 'Delicious'),
-			array ('val' => 'digg',                'lbl' => 'Digg'),
-			array ('val' => 'stumbleupon',         'lbl' => 'StumbleUpon'),
-			array ('val' => 'reddit',              'lbl' => 'Reddit'),
-			array ('val' => 'tumblr',              'lbl' => 'Tumblr'),
-			array ('val' => 'vkontakte',           'lbl' => 'В Контакте'),
-			array ('val' => 'pinterest',           'lbl' => 'Pinterest'),
-			array ('val' => 'facebook_like_but',   'lbl' => 'Facebook Like Button'),
-			array ('val' => 'twitter_tweet_but',   'lbl' => 'Twitter Tweet Button'),
-			array ('val' => 'linkedin_share_but',  'lbl' => 'LinkedIn Share Button'),
-			array ('val' => 'vkontakte_share_but', 'lbl' => 'В Контакте Share Button'),
-			array ('val' => 'email',               'lbl' => 'Email')
+			'counter'             => array ('val' => 'counter',             'lbl' => 'Total Shares Counter'),
+			'facebook'            => array ('val' => 'facebook',            'lbl' => 'Facebook'),
+			'twitter'             => array ('val' => 'twitter',             'lbl' => 'Twitter'),
+			'linkedin'            => array ('val' => 'linkedin',            'lbl' => 'LinkedIn'),
+			'google_bookmarks'    => array ('val' => 'google_bookmarks',    'lbl' => 'Google Bookmarks'),
+			'google_plus'         => array ('val' => 'google_plus',         'lbl' => 'Google Plus'),
+			'google_plus_one_but' => array ('val' => 'google_plus_one_but', 'lbl' => 'Google +1 Button'),
+			'delicious'           => array ('val' => 'delicious',           'lbl' => 'Delicious'),
+			'digg'                => array ('val' => 'digg',                'lbl' => 'Digg'),
+			'stumbleupon'         => array ('val' => 'stumbleupon',         'lbl' => 'StumbleUpon'),
+			'reddit'              => array ('val' => 'reddit',              'lbl' => 'Reddit'),
+			'tumblr'              => array ('val' => 'tumblr',              'lbl' => 'Tumblr'),
+			'vkontakte'           => array ('val' => 'vkontakte',           'lbl' => 'В Контакте'),
+			'pinterest'           => array ('val' => 'pinterest',           'lbl' => 'Pinterest'),
+			'facebook_like_but'   => array ('val' => 'facebook_like_but',   'lbl' => 'Facebook Like Button'),
+			'twitter_tweet_but'   => array ('val' => 'twitter_tweet_but',   'lbl' => 'Twitter Tweet Button'),
+			'linkedin_share_but'  => array ('val' => 'linkedin_share_but',  'lbl' => 'LinkedIn Share Button'),
+			'vkontakte_share_but' => array ('val' => 'vkontakte_share_but', 'lbl' => 'В Контакте Share Button'),
+			'email'               => array ('val' => 'email',               'lbl' => 'Email')
 		);
 	}
 
