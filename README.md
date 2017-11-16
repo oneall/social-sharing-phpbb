@@ -38,6 +38,12 @@ http://docs.oneall.com/plugins/guide/social-sharing-phpbb31/
 * WhatsApp
 * Yahoo Mail
 
+##  Social Sharing Buttons
+* Facebook Like Button
+* Google +1 Button
+* LinkedIn Share Button
+* Twitter Tweet Button
+* VKontakte Share Button
 
 ## About Us
 Social Sharing is maintained by [OneAll](http://www.oneall.com/). OneAll, a technology company offering a set of 
