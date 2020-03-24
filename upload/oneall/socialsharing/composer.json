@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Social Sharing for phpBB allows your users to share pages with 15+ Social Networks like for example Twitter, Facebook, LinkedIn and Google+",
 	"homepage": "https://docs.oneall.com/plugins/",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"keywords": ["phpBB", "Extension", "OneAll", "Social Sharing"],
 	"license": "GPL-2.0",
 	"authors": [
